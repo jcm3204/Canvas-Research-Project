@@ -47,6 +47,14 @@ def makeStartTab(root):
     for day in days:
         dayTree.insert("", "end", day, text=getDay(day))
 
+    def select_days():
+        for day in days:
+            if day not in dayTree.get_checked():
+                dayTree.change_state(day, "checked")
+
+    selectAll = tk.Button(root, text="Select All Days", command=select_days)
+    selectAll.pack(side="top", pady = 10)
+
     # Add Calendar
     cal = Calendar(root, selectmode = 'day',
                year = 2023, month = 1,

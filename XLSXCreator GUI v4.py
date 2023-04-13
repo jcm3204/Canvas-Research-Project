@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from StartTab import makeStartTab
 from BulkTab import makeBulkTab
+from ClearTab import makeClearTab
 
 # create our tKinter object
 root = tk.Tk()
@@ -29,6 +30,9 @@ makeStartTab(tab1)
 
 # create our bulk tab (BulkTab.py)
 makeBulkTab(tab2)
+
+# create our clear tab (ClearTab.py)
+makeClearTab(tab3)
 
 # run our tkinter loop
 root.mainloop()
