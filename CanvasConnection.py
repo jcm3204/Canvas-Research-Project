@@ -112,6 +112,23 @@ def deleteAssignments(checkedAssignments):
         assignment = course.get_assignment(a)
         assignment.delete()
 	
+# method to get modules
+def getModules():
+    return course.get_modules()
+
+def deleteModules(checkedModules):
+    for m in checkedModules:
+        module = course.get_module(m)
+        module.delete()
+
+# method to get files
+def getFiles():
+    return course.get_files()
+
+def deleteFiles(checkedFiles):
+    for f in checkedFiles:
+        file = course.get_file(f)
+        file.delete()
 
 '''
 #Delete Modules

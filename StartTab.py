@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
 from ttkwidgets import CheckboxTreeview
 from GuiHelpers import getDay
@@ -14,10 +15,10 @@ def makeStartTab(root):
         last_day = cal2.get_date() 
         meeting_days = dayTree.get_checked() 
         
-        createXLSX(name, first_day, last_day, meeting_days, user_days_off)
+        createXLSX(name, first_day, last_day, meeting_days, user_days_off, recurringDays)
 
     # add a text box to enter class title
-    label = tk.Label(root, text="Enter Class Name:")
+    label = tk.Label(root, text="Class Name:")
     label.pack(side="top", pady=10)
     title = tk.Entry(root, bd=5)
     title.pack(side="top")
@@ -54,6 +55,73 @@ def makeStartTab(root):
 
     selectAll = tk.Button(root, text="Select All Days", command=select_days)
     selectAll.pack(side="top", pady = 10)
+    
+    # create a dictionary to hold our recurring days
+    # keys are day (0-4) and values are description of recurring event (e.g. Lab Day)
+    recurringDays = {}
+    
+    # Allow users to select recurring days off and give reasoning
+    def select_recurring():
+        #create a pop-up window 
+        window = tk.Toplevel()
+        window.title("Secondary Window")
+        window.config(width=300, height=200)
+        
+        def add_reasoning():
+            selection = "You selected " + getDay(var.get())
+            optionLabel = tk.Label(window, text=selection)
+            optionLabel.pack(side="top", pady=10)
+            
+             # add a text box to enter class title
+            label = tk.Label(window, text="Enter reason for recurring day: ")
+            label.pack(side="top", pady=10)
+            recurr = tk.Entry(window, bd=5)
+            recurr.pack(side="top")
+            
+            def save_day():
+                day = var.get()
+                reason = recurr.get()
+                recurringDays[day] = reason
+                window.destroy
+            
+            #create button to save day
+            button_save = ttk.Button(window, 
+                    text="Save Recurring Day",
+                    command=save_day)
+            button_save.pack(side="bottom")
+            
+            #create button to close window
+            button_save = ttk.Button(window, 
+                    text="Close Window",
+                    command=window.destroy)
+            button_save.pack(side="bottom")
+            
+
+        var = tk.IntVar()
+        R1 = tk.Radiobutton(window, text="M", variable=var, value=0,
+                  command=add_reasoning)
+        R1.pack(side="bottom")
+
+        R2 = tk.Radiobutton(window, text="T", variable=var, value=1,
+                  command=add_reasoning)
+        R2.pack(side="bottom")
+
+        R3 = tk.Radiobutton(window, text="W", variable=var, value=2,
+                  command=add_reasoning)
+        R3.pack(side="bottom")
+        
+        R4 = tk.Radiobutton(window, text="R", variable=var, value=3,
+                  command=add_reasoning)
+        R4.pack(side="bottom")
+
+        R5 = tk.Radiobutton(window, text="F", variable=var, value=4,
+                  command=add_reasoning)
+        R5.pack(side="bottom")
+        
+    
+    # Add a button to select special recurring days
+    reccurButton = tk.Button(root, text="Select Recurring Special Days", command=select_recurring)
+    reccurButton.pack(side="top", pady = 10)
 
     # Add Calendar
     cal = Calendar(root, selectmode = 'day',
@@ -83,5 +151,5 @@ def makeStartTab(root):
     dayOffBox.pack(side="top")
 
     # finally, add a button to generate the Xlsx template
-    button = tk.Button(root, text="Create XLSX File", command= createFile)
+    button = tk.Button(root, text="Create Spreadsheet", command= createFile)
     button.pack(side = "top", pady=10)

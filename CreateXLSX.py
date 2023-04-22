@@ -6,7 +6,7 @@ from GuiHelpers import getDay
 
 # Given start of semester, days of week class meets, and special days off (breaks and other days) 
 # create the schedule template as xlsx file so prof can start planning
-def createXLSX(name, first_day, last_day, meeting_days, user_days_off):
+def createXLSX(name, first_day, last_day, meeting_days, user_days_off, recurringDays):
 
   # change meeting days to ints so it works with our code
   meeting_days = list(map(int, meeting_days))
@@ -62,6 +62,11 @@ def createXLSX(name, first_day, last_day, meeting_days, user_days_off):
       # but print reason for day off in the topic column (data_row[4])
       if single_date in days_off:
         data_row[4] = "NO CLASS - " + days_off[single_date]
+       
+      # if the current day is a recurring day, 
+      # print the recurring day reason in the notes column (data_row[6]) 
+      if day in recurringDays:
+        data_row[6] = recurringDays[day]
 
       # add row to our xlsx array
       data.append(data_row)
