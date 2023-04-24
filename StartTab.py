@@ -130,15 +130,15 @@ def makeStartTab(root):
  
     cal.pack(side="top", pady = 10)
 
-    #Create list to hold our days off
-    user_days_off = []
+    #Create dictionary to hold our days off
+    user_days_off = {}
 
     # Define Function to select the date
     def get_day():
         day = cal.get_date()
         if day not in dayOffBox.get("1.0", tk.END+"-1c"):
             dayOffBox.insert(tk.END, day+ "\n")
-            user_days_off.append(day)
+            user_days_off[day] = ""
             
             #create a pop-up window 
             window = tk.Toplevel()
@@ -151,12 +151,20 @@ def makeStartTab(root):
             reason = tk.Entry(window, bd=5)
             reason.pack(side="top")
             
+            def save_reason():
+                user_days_off[day] = reason.get()
             
             #create button to save reason
-            button_save = ttk.Button(window, 
+            button_save= ttk.Button(window, 
+                    text="Save Day Off Reason",
+                    command=save_reason)
+            button_save.pack(side="bottom")
+            
+            #create button to close window
+            button_close= ttk.Button(window, 
                     text="Close Window",
                     command=window.destroy)
-            button_save.pack(side="bottom")
+            button_close.pack(side="bottom")
             
             
             
