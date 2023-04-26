@@ -25,20 +25,20 @@ def makeStartTab(root):
 
     # add a box to select the first day of semester
     L1 = tk.Label(root, text="Select First Day: ")
-    L1.pack(side="top", pady=10)
+    L1.pack(side="top", pady=5)
     cal1 = DateEntry(root, selectmode='day')
     cal1.pack(side="top")
 
     # add a box to select the last day of semester
     L2 = tk.Label(root, text="Select Last Day: ")
-    L2.pack(side="top", pady=10)
+    L2.pack(side="top", pady=5)
     cal2 = DateEntry(root, selectmode='day')
     cal2.pack(side="top")
 
     # add option to select days of the week
     # this will be a list of 5 check buttons M-F
     label_days = tk.Label(root, text="Select Days of Week:")
-    label_days.pack(side="top", pady=10)
+    label_days.pack(side="top", pady=5)
 
     dayTree = CheckboxTreeview(root, height = 5)
     dayTree.pack(side="top")
@@ -54,7 +54,7 @@ def makeStartTab(root):
                 dayTree.change_state(day, "checked")
 
     selectAll = tk.Button(root, text="Select All Days", command=select_days)
-    selectAll.pack(side="top", pady = 10)
+    selectAll.pack(side="top", pady = 5)
     
     # create a dictionary to hold our recurring days
     # keys are day (0-4) and values are description of recurring event (e.g. Lab Day)
@@ -128,7 +128,7 @@ def makeStartTab(root):
                year = 2023, month = 1,
                day = 1)
  
-    cal.pack(side="top", pady = 10)
+    cal.pack(side="right")
 
     #Create dictionary to hold our days off
     user_days_off = {}
@@ -166,21 +166,16 @@ def makeStartTab(root):
                     command=window.destroy)
             button_close.pack(side="bottom")
             
-            
-            
-            
-            
-
     #Create a button to pick the days off (one at a time)
     button = tk.Button(root, text="Select Day Off", command=get_day)
-    button.pack(side="top", pady = 10)
+    button.pack(side="right", pady = 10)
 
     # add text box to display all selected days off
     dayOffLabel = tk.Label(root, text = "List of Selected Days Off: ")
-    dayOffLabel.pack(side="top")
+    dayOffLabel.pack(side="left")
     dayOffBox = tk.Text(root, height = 10, width = 30)
-    dayOffBox.pack(side="top")
+    dayOffBox.pack(side="left")
 
     # finally, add a button to generate the Xlsx template
     button = tk.Button(root, text="Create Spreadsheet", command= createFile)
-    button.pack(side = "top", pady=10)
+    button.pack(side = "bottom", pady=10)
